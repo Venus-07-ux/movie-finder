@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure Movie Finder</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <main class="app">
+    <h1>🎬 Secure Movie Finder</h1>
+
+    <div class="search">
+      <input id="titleInput" type="text" placeholder="Enter movie title" />
+      <button id="searchBtn">Search Movie</button>
+    </div>
+
+    <p id="status"></p>
+
+    <section id="result" class="hidden">
+      <h2>Title and Year</h2>
+      <p id="titleYear"></p>
+
+      <h2>Rating</h2>
+      <p id="rating"></p>
+
+      <h2>Plot Description</h2>
+      <p id="plot"></p>
+
+      <button id="watchlistBtn">Add to Watchlist</button>
+    </section>
+  </main>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
