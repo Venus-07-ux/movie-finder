@@ -57,7 +57,8 @@ async function searchMovie() {
     };
 
     titleYearEl.textContent = `${currentMovie.title} (${currentMovie.year})`;
-    ratingEl.textContent = `⭐ ${currentMovie.rating} / 10`;
+    ratingEl.textContent =
+      currentMovie.rating === 'N/A' ? 'No rating' : `⭐ ${currentMovie.rating} / 10`;
     plotEl.textContent = currentMovie.plot;
     resultEl.classList.remove('hidden');
     setStatus('');
@@ -74,6 +75,20 @@ async function addToWatchlist() {
   watchlistBtn.disabled = true;
 
   try {
+    // Проверяем, нет ли уже этого фильма в watchlist (GET)
+    const checkResponse = await fetch(
+      `${JSON_SERVER_URL}/watchlist?imdbID=${currentMovie.imdbID}`
+    );
+    if (!checkResponse.ok) {
+      throw new Error(`Could not check watchlist: ${checkResponse.status}`);
+    }
+    const existing = await checkResponse.json();
+    if (existing.length > 0) {
+      setStatus(`"${currentMovie.title}" is already in your watchlist.`, 'error');
+      return;
+    }
+
+    // Сохраняем фильм (POST)
     const response = await fetch(`${JSON_SERVER_URL}/watchlist`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
